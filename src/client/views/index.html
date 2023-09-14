@@ -1,42 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Test</title>
-    </head>
+<html lang="en">
 
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test-webpack</title>
+</head>
 
-        <header>
-            <div class="">
-                Logo
-            </div>
-            <div class="">
-                navigation
-            </div>
-        </header>
+<body>
+    <div class="container">
+        <form id="myForm" method="post" onsubmit="return Client.handleSubmit(event)">
+            <label for="URI">Enter an Article URL:</label>
+            <input type="text" id="URI" name="URI" />
+            <button type="submit" value="Analyze">Analyze</button>
+        </form>
+    </div>
+    <div id="error" style="display: none;"></div>
+    <div id="results">
+        <h2>Results:</h2>
+        <div id="loader" style="display: none;"></div>
 
-        <main>
-            <section>
-                <form class="" onsubmit="return Client.handleSubmit(event)">
-                    <input id="name" type="text" name="input" value="" placeholder="Name">
-                    <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
-                </form>
-            </section>
+        <ul id="resultsList">
+            <li id="agreement"></li>
+            <li id="subjectivity"></li>
+            <li id="confidence"></li>
+            <li id="irony"></li>
+            <li id="score_tag"></li>
+        </ul>
+    </div>
+</body>
 
-            <section>
-                <strong>Form Results:</strong>
-                <div id="results">
-                    <p id="subjectivity"></p>
-                    <p id="polartity"></p>
-                    <p id="confidence"></p>
-                    <p id="irony"></p>
-                </div>
-            </section>
-        </main>
-
-        <footer>
-            <p>This is a footer</p>
-        </footer>
-    </body>
 </html>
