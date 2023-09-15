@@ -15,8 +15,8 @@ const handleSubmit = async (event) => {
         }
       })
 
-
-    console.log(input.value)
+    
+    console.log(data)
 
 }
 

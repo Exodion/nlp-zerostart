@@ -23,8 +23,23 @@ app.get("/",(req,res) => {
 app.post("/", async (req,res) => {
     const {input} = req.body;
     console.log(input);
-    const Analyze = analyze(input, key);
-    console.log(Analyze);
+    
+    //if (input == undefined){input = "http://udacity.com"}
+
+    const Analyze = await analyze(input, key);
+    //console.log(Analyze);
+    const {code, message, sample} = Analyze
+
+    if(code == 100 || code == 212){
+        return res.send({msg, code:code})
+    }
+
+    return res.send({
+        sample: sample,
+        code: code
+    })
+    console.log(">>>>" + input);
 })
 
 app.listen(port, () => console.log(`server is listening on port ${port}`))
+
