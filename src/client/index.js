@@ -5,5 +5,5 @@ import "./styles/form.scss"
 import "./styles/header.scss"
 import "./styles/resets.scss"
 
-import {handleSubmit} from "./js/handleSubmit"
+import {handleSubmit} from "./views/js/handleSubmit"
 export {handleSubmit}

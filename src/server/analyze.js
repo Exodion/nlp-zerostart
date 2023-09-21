@@ -2,64 +2,48 @@ const axios = require("axios");
 const {response} = require("express");
 const meaningCloud = "https://api.meaningcloud.com/sentiment-2.1";
 
-const analyze = async (url, key) =>{
-    //console.log("my info");
-    console.log(`url: ${url}, key: ${key}`);
-    
-     const check = await axios.get(`${meaningCloud}?key=${key}&url=${url}&lang=en`)
-    .then(res => {
-        
-        const {code} = response.data.status
-        const {message} = response.data.status
-        console.log(res.data)
-        //console.log(code) 
-        if (code == 100){
-            return manageError(code, "Enter a valid url")
-
-        }
-
-        else if (code == 212){
-            return messageError(code, message)
-        }
-        return manageSuccess(response.data, code)
-    })
-
-        console.log(check)
-        console.log(`url: ${url}, key: ${key}`);
-        return check
+analyze = async (url, key) => {
+    // the URL=`${BASE_API_URL}?key=${MEAN_CLOUD_API_KEY}&url=${req.body.url}&lang=en`
+    analysis = await axios.get(`${meaningCloud}?key=${key}&url=${url}&lang=en`)
+        .then(function (response) {
+            const { code } = response.data.status
+            //handle errors
+            if (code == 100) {
+                const error = manageError(code, "please enter a valid URL")
+                return error
+            } else if (code == 212) {
+                const error = manageError(code, response.data.status.msg)
+                return error
+            }
+            //console.log(response.data)
+            return successResponse(response.data, code)
+        })
+    return analysis
 }
 
-
-
-const manageError = (code, message) =>{
-
+const manageError = (code, msg) => {
     const error = {
-        code,
-        message
-
+        code: code,
+        msg: msg
     }
-
     return error
 }
 
-const manageSuccess = (data, code) =>{
-    const {agreement, subjectivity, confidence, score_tag, irony} = data
-    const sample = {
-        agreement,
-        subjectivity,
-        confidence,
-        score_tag,
-        irony
-
-    }
-
-    const result ={
-        sample,
-        code
-
-    }
-
-    return result
+//cure the data and send it to the client
+const successResponse = (data, code) =>{
+    const { score_tag, agreement, subjectivity, confidence, irony } = data
+            let sample = {
+                score_tag: score_tag,
+                agreement: agreement,
+                subjectivity: subjectivity,
+                confidence: confidence,
+                irony: irony
+            }
+            result = { sample, status: code }
+            console.log(result);
+            return result
 }
 
-module.exports = {analyze};
+module.exports = {
+    analyze
+}

@@ -1,7 +1,10 @@
 const webpack = require("webpack"),
 path = require("path")
 const HtmlWebpackPlugin = require('html-webpack-plugin'),
-{CleanWebpackPlugin} = require("clean-webpack-plugin");
+{CleanWebpackPlugin} = require("clean-webpack-plugin"),
+CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
+MiniCssExtractPlugin = require("mini-css-extract-plugin")
+
 module.exports = {
     entry: "./src/client/index.js",
     mode: "development",
@@ -27,7 +30,7 @@ module.exports = {
         },
         {
           test: /\.s[ac]ss$/i,
-          use: [ 'style-loader', 'css-loader', 'sass-loader' ]
+          use: [ MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader' ]
           } //added by CF
       ]
 
@@ -48,10 +51,22 @@ module.exports = {
       // Automatically remove all unused webpack assets on rebuild
       cleanStaleWebpackAssets: true,
       protectWebpackAssets: false
-  })  
+  })  ,
+  new MiniCssExtractPlugin({
+    filename: 'style.[contenthash].css'
+})
   
   
   
   ],
+  optimization: {
+    minimizer: [
+
+      new CssMinimizerPlugin(),
+    ],
+    minimize: true,
+    
+
+  }
 
 }
